@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -70,30 +71,38 @@ fun MoMoCalcScreen() {
     val fee = (numericAmount ?: 0.0) * 0.03
     val formattedFee = "UGX %,.0f".format(fee)
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(R.string.app_title),
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        HoistedAmountInput(
-            amount = amountInput,
-            onAmountChange = { amountInput = it },
-            isError = isError
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Text(
-            text = stringResource(R.string.fee_label, formattedFee),
-            style = MaterialTheme.typography.bodyLarge
-        )
+        item {
+            Text(
+                text = stringResource(R.string.app_title),
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        item {
+            HoistedAmountInput(
+                amount = amountInput,
+                onAmountChange = { amountInput = it },
+                isError = isError
+            )
+        }
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+        item {
+            Text(
+                text = stringResource(R.string.fee_label, formattedFee),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
     }
 }
 
