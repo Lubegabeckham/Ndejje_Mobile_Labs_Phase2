@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nedejje.momocalc.ui.theme.MoMoCalculatorAppTheme
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MoMoCalculatorAppTheme {
-                Surface { 
+                Surface(modifier = Modifier.fillMaxSize()) { 
                     MoMoCalcScreen() 
                 }
             }
@@ -45,18 +47,21 @@ fun HoistedAmountInput(
     onAmountChange: (String) -> Unit,
     isError: Boolean = false
 ) {
-    Column {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         TextField(
             value = amount,
             onValueChange = onAmountChange,
             isError = isError,
-            label = { Text(stringResource(R.string.enter_amount)) }
+            label = { Text(stringResource(R.string.enter_amount)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true
         )
         if (isError) {
             Text(
                 text = stringResource(R.string.error_numbers_only),
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(top = 4.dp)
             )
         }
     }
@@ -85,7 +90,7 @@ fun MoMoCalcScreen() {
             )
         }
         item {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
         item {
             HoistedAmountInput(
@@ -95,12 +100,13 @@ fun MoMoCalcScreen() {
             )
         }
         item {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
         item {
             Text(
                 text = stringResource(R.string.fee_label, formattedFee),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }
